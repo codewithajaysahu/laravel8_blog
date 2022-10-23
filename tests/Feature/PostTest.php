@@ -21,7 +21,7 @@ class PostTest extends TestCase
         //$this->assertTrue(true);
     }
 
-    public function testSee1BlogPostWhenThereIs1(){
+    public function testSee1BlogPostWhenThereIs1WithNComments(){
             //Arrange
             $post = $this->createDummyBlogPost();
 
@@ -32,10 +32,19 @@ class PostTest extends TestCase
             //Assert
 
             $response->assertSeeText('This is blog title');
+            $response->assertSeeText('No comments Yes!');
 
             $this->assertDatabaseHas('blog_posts', [
                 'title' => 'This is blog title'
             ]);
+    }
+
+    public function testSee1BlogPostwithComments(){
+         //Arrange
+         $post = $this->createDummyBlogPost();
+
+          //Act
+          $response = $this->get('/posts');
     }
 
     public  function testStoreValid(){
