@@ -9,6 +9,13 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth')
+        ->only('create', 'update', 'store', 'edit', 'destroy');
+    }
+
     /**
      * Display a listing of the resource.
      *

@@ -25,16 +25,16 @@ use Illuminate\Support\Facades\Route;
 //     return view('home.contact');
 // })->name('home.contact');
 
-Route::get('/',  [HomeController::class, 'index'])->name('home.index');
+Route::get('/',  [HomeController::class, 'home'])
+->name('home.index')
+//->middleware('auth')
+;
 
 Route::get('/contact', [HomeController::class, 'contact'])->name('home.contact');
 
-Route::get('/single', AboutController::class);
+Route::resource('posts', PostController::class);
 
-
-
-Route::resource('posts', PostController::class)->only('index', 'show', 'create', 'store', 'edit', 'update', 'destroy');
-
+Auth::routes();
 // Route::get('posts', function() use($posts){
 //    //dd(request()->all());
 //    dd(request()->input('page'));
