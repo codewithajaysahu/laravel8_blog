@@ -72,7 +72,7 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('post.edit', ['post' => BlogPost::findOrFail($id)]);
     }
 
     /**
@@ -82,9 +82,15 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StorePost $request, $id)
     {
-        
+        $post = BlogPost::findOrFail($id);
+        $validated = $request->validated();
+        $post->fill($validated);
+        $post->save();
+        $request->session()->flash('status', 'Blog post was updated');
+
+        return redirect()->route('posts.show', ['post' => $post->id]);
     }
 
     /**
@@ -95,6 +101,10 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+            $post = BlogPost::findOrFail($id);
+            $post->delete();
+
+            session()->flash('status', 'Blog post has been deleted!');
+            return redirect()->route('posts.index');
     }
 }
