@@ -115,6 +115,7 @@ class PostTest extends TestCase
             'id' => $post->id
            ]);
 
+           
            $this->assertDatabaseHas('blog_posts', [
             'title' => 'A new named title',
             'content' => 'Content was changed',
@@ -139,11 +140,18 @@ class PostTest extends TestCase
 
          $this->assertEquals(session('status'), 'Blog post has been deleted!');
 
-         $this->assertDatabaseMissing('blog_posts', [
-            'title' => 'This is blog title',
-            'content' => 'This is blog content',
-            'id' => $post->id
-           ]);
+        //  $this->assertDatabaseMissing('blog_posts', [
+        //     'title' => 'This is blog title',
+        //     'content' => 'This is blog content',
+        //     'id' => $post->id
+        //    ]);
+
+          // $this->assertSoftDeleted('blog_posts', $post->toArray());
+              $this->assertSoftDeleted('blog_posts', [
+               'title' => 'This is blog title',
+               'content' => 'This is blog content',
+               'id' => $post->id
+              ]);
 
     }
 
