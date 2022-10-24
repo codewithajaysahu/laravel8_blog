@@ -3,12 +3,18 @@
 @section('title', $post->title)
 
 @section('content')
-<h1>{{ $post->title }}</h1>
+<h1>
+    {{ $post->title }}
+    @component('components.badge', ['show' => now()->diffInMinutes($post->created_at) < 30])
+        Brand new Post!
+    @endcomponent   
+</h1>
+
 <p>{{ $post->content }}</p>
 <p>Added {{ $post->created_at->diffForHumans() }}</p>
 
 @if(now()->diffInMinutes($post->created_at) < 5)
-    <div class="alert alert-info">New!</div>
+    
 @endif
 
 <h4>Comments</h4>
