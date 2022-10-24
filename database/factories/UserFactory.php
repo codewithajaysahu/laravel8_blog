@@ -30,4 +30,19 @@ class UserFactory extends Factory
             'remember_token' => Str::random(10),
         ];
     }
+
+      /**
+ * Indicate that the user is suspended.
+ *
+ * @return \Illuminate\Database\Eloquent\Factories\Factory
+ */
+    public function suspended()
+    {
+        return $this->state(function (array $attributes) {
+            return [
+                'name' => 'Ajay Sahu',
+                'email' => 'ajay@laravel.test'
+            ];
+        });
+    }
 }

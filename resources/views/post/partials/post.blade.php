@@ -1,7 +1,7 @@
 <h3>    <a href="{{ route('posts.show', ['post' => $post->id]) }}" > {{ $post->title }}</a>
    </h3>
 
-   @if ($post->commets_count)
+   @if ($post->comments_count)
     <p>{{ $post->comments_count }} Comments</p>
     @else
        <p>No comments Yes!</p>
