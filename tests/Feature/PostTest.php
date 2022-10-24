@@ -50,7 +50,7 @@ class PostTest extends TestCase
             $response = $this->get('/posts');
            // dd($response);
             $this->assertDatabaseCount('comments', 3);
-            $response->assertSeeText('comments', $escaped = true);
+            $response->assertSeeText('3 Comments', $escaped = true);
             //$response->assertSeeText('3 Comments', $escaped = true);
     }
 
