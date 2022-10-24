@@ -17,7 +17,7 @@ class HomeTest extends TestCase
     public function testContactPageIsWorkingCorrectly()
     {
         $response = $this->get('/contact');
-        $response->assertSeeText('Contact Hello world');
+        $response->assertSeeText('Hello this is contact!');
         $response->assertStatus(200);
     }
 }

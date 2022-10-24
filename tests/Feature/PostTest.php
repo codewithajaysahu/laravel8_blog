@@ -87,7 +87,8 @@ class PostTest extends TestCase
 
     public function testUpdateValid() {
            //Arrange
-            $post = $this->createDummyBlogPost();
+           $user = $this->user();
+            $post = $this->createDummyBlogPost($user->id);
             
            //$this->assertDatabaseHas('blog_posts', $post->toArray());
            $this->assertDatabaseHas('blog_posts', [
@@ -98,11 +99,11 @@ class PostTest extends TestCase
 
 
            $params = [
-            'title' => 'A new named title',
-            'content' => 'Content was changed'
-        ];
+                'title' => 'A new named title',
+                'content' => 'Content was changed'
+            ];
 
-        $this->actingAs($this->user())
+        $this->actingAs($user)
             ->put("/posts/{$post->id}", $params)
             ->assertStatus(302)
             ->assertSessionHas('status');
@@ -125,7 +126,8 @@ class PostTest extends TestCase
 
     public function testDelete() {
          //Arrange
-         $post = $this->createDummyBlogPost();
+         $user = $this->user();        
+         $post = $this->createDummyBlogPost($user->id);
 
          $this->assertDatabaseHas('blog_posts', [
             'title' => 'This is blog title',
@@ -133,7 +135,7 @@ class PostTest extends TestCase
             'id' => $post->id
            ]);
 
-        $this->actingAs($this->user())
+        $this->actingAs($user)
             ->delete("/posts/{$post->id}")
             ->assertStatus(302)
             ->assertSessionHas('status');
@@ -155,14 +157,19 @@ class PostTest extends TestCase
 
     }
 
-    private function createDummyBlogPost() :BlogPost {
+    private function createDummyBlogPost($userId = null) :BlogPost {
         // $post = new BlogPost();
         //  $post->title = 'This is blog title';
         //  $post->content = 'This is blog content';
+        //  $post->user_id = $userId ?? $this->user()->id;
         //  $post->save();
+        
+        // return $post;
         return BlogPost::factory()
             ->suspended()
-            ->create();       
-        //return $post;
+            ->create([
+                'user_id' => $userId ?? $this->user()->id
+            ]);       
+        
     }
 }

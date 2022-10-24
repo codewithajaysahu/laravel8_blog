@@ -10,6 +10,6 @@ abstract class TestCase extends BaseTestCase
     use CreatesApplication;
 
     protected function user(){
-        return User::factory()->create();       
+        return User::factory()->suspended()->create();       
     }
 }
