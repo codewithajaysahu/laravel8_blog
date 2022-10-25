@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\UpdateUser;
-use App\Image;
+use App\Models\Image;
 
 class UserController extends Controller
 {
@@ -77,6 +77,8 @@ class UserController extends Controller
      */
     public function update(UpdateUser $request, User $user)
     {
+
+        dd($request);
         if ($request->hasFile('avatar')) {
             $path = $request->file('avatar')->store('avatars');
 

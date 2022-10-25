@@ -1,3 +1,4 @@
+
 @forelse($comments as $comment)
     <p>
         {{ $comment->content }}
