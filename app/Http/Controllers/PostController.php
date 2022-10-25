@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\BlogPostPosted;
 use App\Models\BlogPost;
 use App\Http\Requests\StorePost;
+use App\Models\Image;
 use Illuminate\Http\Request;
 use App\Models\User;
 Use Illuminate\Support\Facades\Gate;
@@ -88,19 +90,21 @@ class PostController extends Controller
     public function store(StorePost $request)
     {
         $validatedData = $request->validated();
-        //$post = new  BlogPost();
-        // $post->title = $request->input('title');
-        // $post->content = $request->input('content');
+        $validatedData['user_id'] = $request->user()->id;
+        $blogPost = BlogPost::create($validatedData);
 
-        // $post->title = $validated['title'];
-        // $post->content = $validated['content'];
-        // $post->save();
-        $validatedData['user_id'] = $request->user()->id; 
-        $post = BlogPost::create($validatedData);
+        if ($request->hasFile('thumbnail')) {
+            $path = $request->file('thumbnail')->store('thumbnails');
+            $blogPost->image()->save(
+                Image::make(['path' => $path])
+            );
+        }
 
+        event(new BlogPostPosted($blogPost));
 
-        $request->session()->flash('status', 'The blog post was created.');
-        return redirect()->route('posts.show', ['post' => $post->id]);
+        $request->session()->flash('status', 'Blog post was created!');
+
+        return redirect()->route('posts.show', ['post' => $blogPost->id]);
     }
 
     /**
