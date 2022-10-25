@@ -1,13 +1,14 @@
-@extends('layouts.app')
-
-@section('title', 'Update the post')
+@extends('layout')
 
 @section('content')
-    <form action="{{ route('posts.update', ['post' => $post->id]) }}" method="post">
+    <form method="POST" 
+          action="{{ route('posts.update', ['post' => $post->id]) }}"
+          enctype="multipart/form-data">
         @csrf
         @method('PUT')
-        @include('post.partials.form')
 
-        <div><input type="submit" value="Update" class="btn btn-primary btn-block"></div>
+        @include('posts._form')
+
+        <button type="submit" class="btn btn-primary btn-block">Update!</button>
     </form>
 @endsection

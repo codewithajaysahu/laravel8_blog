@@ -10,14 +10,14 @@ class HomeController extends Controller
         //dd(Auth::check());
         //dd(Auth::id());
         //dd(Auth::user());
-        return view('home.index');
+        return view('home');
     }
 
     public function contact(){
-        return view('home.contact');
+        return view('contact');
     }
 
     public function secret(){
-        return view('home.secret');
+        return view('secret');
     }
 }
