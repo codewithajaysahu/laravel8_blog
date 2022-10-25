@@ -13,9 +13,16 @@
 <p>{{ $post->content }}</p>
 <p>Added {{ $post->created_at->diffForHumans() }}</p>
 
-@if(now()->diffInMinutes($post->created_at) < 5)
+{{-- @updated(['date' => $post->created_at, 'name' => $post->user->name])
+    @endupdated
+    @updated(['date' => $post->updated_at])
+        Updated
+    @endupdated --}}
+
+    <p>Currently read by {{ $counter }} people</p>
+{{-- @if(now()->diffInMinutes($post->created_at) < 5)
     
-@endif
+@endif --}}
 
 <h4>Comments</h4>
 @forelse ($post->comments as $comment)

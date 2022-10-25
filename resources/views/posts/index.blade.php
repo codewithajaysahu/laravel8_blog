@@ -11,7 +11,7 @@
     @endforeach --}}
 
     @forelse ( $posts as $key => $post)
-        @include('post.partials.post', [])
+        @include('posts.partials.post', [])
         @empty
     <p>No blog posts yet!</p>
     @endforelse
