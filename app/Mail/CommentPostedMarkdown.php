@@ -5,9 +5,11 @@ namespace App\Mail;
 use Illuminate\Bus\Queueable;
 use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use App\Models\Comment;
 
-class CommentPostedMarkdown extends Mailable
+//class CommentPostedMarkdown extends Mailable implements ShouldQueue
+class CommentPostedMarkdown extends Mailable implements ShouldQueue
 {
     use Queueable, SerializesModels;
 
@@ -29,7 +31,7 @@ class CommentPostedMarkdown extends Mailable
      * @return $this
      */
     public function build()
-    {
+    {      
         $subject = "Commented was posted on your {$this->comment->commentable->title} blog post";
         return $this->subject($subject)
             ->markdown('emails.posts.commented-markdown');
